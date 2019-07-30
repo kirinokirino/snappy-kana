@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
 	<style>
+	
 	.flex {
 		display: flex;
 		flex-direction: column;
@@ -12,10 +13,10 @@
 	}
 	
 	.buttons {
-		display: flex;
-		flex-direction: rows;
-		justify-content: center;
-		align-items: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 	}
 	
 	input[type=text] {
@@ -27,8 +28,18 @@
 		font-size: 1.5em;
 	}
 	
+	input[type=text]:focus  {
+		border: none;
+		border-bottom: 2px solid lightblue;
+		text-align: center;
+		color: lightblue;
+		font-weight: bold;
+		font-size: 1.5em;
+		outline: none;
+	}
+	
 	button {
-		margin: 1.5em;
+		margin-top: 1.5em;
 		background-color: white;
 		border: 2px solid lightblue;
 		color: lightblue;
@@ -46,6 +57,19 @@
 		background-color: lightblue;
 		color: white;
 	}
+	
+	@media only screen and (orientation: landscape) {
+		.buttons {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		button {
+			margin: 1.5em;
+		}
+	}
 	</style>
 </head>
 
@@ -56,7 +80,9 @@
 		<div class="buttons">
 			<button id="hiragana">Hiragana</a>
 			<button id="katakana">Katakana</a>
+			<button id="review">Review</a>
 		</div>
+		
 		<p>
 		for katakana use UPPERCASE letters.
 		<br>
@@ -68,10 +94,10 @@
 	const challange = document.getElementById('challange');
 	const challanges_hira = ['あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', 'さ', 'し', 'す', 'せ', 'そ', 'た', 'ち', 'つ', 'て', 'と', 'な', 'に', 'ぬ', 'ね', 'の', 'は', 'ひ', 'ふ', 'へ', 'ほ', 'ま', 'み', 'む', 'め', 'も', 'や', 'ゆ', 'よ', 'ら', 'り', 'る', 'れ', 'ろ', 'ん'];
 	const challanges_kata = ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', 'サ', 'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト', 'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ', 'フ', 'ヘ', 'ホ', 'マ', 'ミ', 'ム', 'メ', 'モ', 'ヤ', 'ユ', 'ヨ', 'ラ', 'リ', 'ル', 'レ', 'ロ', 'ワ', 'ヲ'];
+	const challanges_all = challanges_hira.concat(challanges_kata);
 	var start = 0;
-	var end = 3;
 	var counter = 1;
-	var hiraorkata = 0;
+	var mode = 0;
 	var prev = 'あ';
 	var next = 'あ';
 	wanakana.bind(input);
@@ -79,19 +105,21 @@
 
 	function nextChallange() {
 		counter++;
-		if(counter % 10 == 0) {
-			end++
-		} else if(counter > 30 && counter % 10 == 0) {
-			end++;
-			start++;
+		if(counter % 15 == 0) {
+			start++
 		}
 		while(next == prev) {
-			if(hiraorkata == 0) {
-				if(end > challanges_hira.length) end = challanges_hira.length;
-				next = challanges_hira[Math.floor(Math.random() * end) + start];
-			} else {
-				if(end > challanges_kata.length) end = challanges_kata.length;
-				next = challanges_kata[Math.floor(Math.random() * end) + start];
+			if(mode == 0) {
+				rand = Math.floor(Math.random() * 5) + start
+				if(rand > challanges_hira.length) rand = challanges_hira.length;
+				next = challanges_hira[rand];
+			} else if (mode == 1) {
+				rand = Math.floor(Math.random() * 5) + start
+				if(rand > challanges_kata.length) rand = challanges_kata.length;
+				next = challanges_kata[rand];
+			} else if (mode == 2) {
+				rand = Math.floor(Math.random() * challanges_all.length);
+				next = challanges_all[rand];
 			}
 		}
 		input.value = '';
@@ -100,22 +128,30 @@
 	}
 
 	function check(e) {
-		console.log(input.value + ' start=' + start + ' end=' + end + ' counter=' + counter);
+		console.log(input.value + ' start=' + start + ' counter=' + counter);
 		if(challange.textContent == e.srcElement.value) {
 			nextChallange()
 		}
 	}
 	document.getElementById("hiragana").addEventListener('click', function() {
 		console.log("hiragana");
-		hiraorkata = 0;
+		mode = 0;
 		counter--;
 		nextChallange();
 	});
 	document.getElementById("katakana").addEventListener('click', function() {
 		console.log("katakana");
-		hiraorkata = 1;
+		mode = 1;
 		counter--;
 		nextChallange();
 	});
+	
+	document.getElementById("review").addEventListener('click', function() {
+		console.log("review");
+		mode = 2;
+		counter--;
+		nextChallange();
+	});
+	
 	</script>
 </body>
