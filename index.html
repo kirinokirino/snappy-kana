@@ -1,157 +1,168 @@
 <!DOCTYPE html>
 
+<html>
 <head>
 	<meta charset="UTF-8">
-	<script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
+	<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport">
+
+	<title>Snappy kana learning!</title>
+	<meta content="Learn and review hiragana and katakana. No distractions." name="description">
+	<link href="favicon.png" rel="icon" type="image/png"><!-- Apple Touch Icon (at least 200x200px) 
+    <link rel="apple-touch-icon" href="/custom-icon.png"> -->
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="browserconfig.xml" name="msapplication-config">
+	<link href="https://kirinokirino.github.io/snappy-kana" rel="canonical">
 	<style>
-	
-	.flex {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.buttons {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-	}
-	
-	input[type=text] {
-		border: none;
-		border-bottom: 2px solid lightblue;
-		text-align: center;
-		color: lightblue;
-		font-weight: bold;
-		font-size: 1.5em;
-	}
-	
-	input[type=text]:focus  {
-		border: none;
-		border-bottom: 2px solid lightblue;
-		text-align: center;
-		color: lightblue;
-		font-weight: bold;
-		font-size: 1.5em;
-		outline: none;
-	}
-	
-	button {
-		margin-top: 1.5em;
-		background-color: white;
-		border: 2px solid lightblue;
-		color: lightblue;
-		padding: 15px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		-webkit-transition-duration: 0.4s;
-		/* Safari */
-		transition-duration: 0.3s;
-	}
-	
-	button:hover {
-		background-color: lightblue;
-		color: white;
-	}
-	
-	@media only screen and (orientation: landscape) {
-		.buttons {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-		}
-		
-		button {
-			margin: 1.5em;
-		}
-	}
+	   
+	   main, footer {
+	       display: flex;
+	       flex-direction: column;
+	       justify-content: center;
+	       align-items: center;
+	   }
+	   
+	   .buttons {
+	           display: flex;
+	           flex-direction: column;
+	           justify-content: center;
+	           align-items: center;
+	   }
+	   
+	   input[type=text] {
+	       border: none;
+	       border-bottom: 2px solid lightblue;
+	       text-align: center;
+	       color: lightblue;
+	       font-weight: bold;
+	       font-size: 1.5em;
+	   }
+	   
+	   input[type=text]:focus  {
+	       border: none;
+	       border-bottom: 2px solid lightblue;
+	       text-align: center;
+	       color: lightblue;
+	       font-weight: bold;
+	       font-size: 1.5em;
+	       outline: none;
+	   }
+	   
+	   button {
+	       margin-top: 1.5em;
+	       background-color: white;
+	       border: 2px solid lightblue;
+	       color: lightblue;
+	       padding: 15px 32px;
+	       text-align: center;
+	       text-decoration: none;
+	       display: inline-block;
+	       font-size: 16px;
+	       -webkit-transition-duration: 0.4s;
+	       /* Safari */
+	       transition-duration: 0.3s;
+	   }
+	   
+	   button:hover {
+	       background-color: lightblue;
+	       color: white;
+	   }
+	   
+	   @media only screen and (orientation: landscape) {
+	       .buttons {
+	           display: flex;
+	           flex-direction: row;
+	           justify-content: center;
+	           align-items: center;
+	       }
+	       
+	       button {
+	           margin: 1.5em;
+	       }
+	   }
 	</style>
+	<script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
 </head>
 
 <body>
-	<div class="flex">
+	<main>
 		<h1 id="challange">あ</h1>
-		<input type="text" id="input" autofocus/>
-		<div class="buttons">
-			<button id="hiragana">Hiragana</a>
-			<button id="katakana">Katakana</a>
-			<button id="review">Review</a>
-		</div>
-		
-		<p>
-		for katakana use UPPERCASE letters.
-		<br>
-		для катаканы используйте ЗАГЛАВНЫЕ буквы.
-		</p>
-	</div>
-	<script>
-	const input = document.querySelector('input');
-	const challange = document.getElementById('challange');
-	const challanges_hira = ['あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', 'さ', 'し', 'す', 'せ', 'そ', 'た', 'ち', 'つ', 'て', 'と', 'な', 'に', 'ぬ', 'ね', 'の', 'は', 'ひ', 'ふ', 'へ', 'ほ', 'ま', 'み', 'む', 'め', 'も', 'や', 'ゆ', 'よ', 'ら', 'り', 'る', 'れ', 'ろ', 'ん'];
-	const challanges_kata = ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', 'サ', 'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト', 'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ', 'フ', 'ヘ', 'ホ', 'マ', 'ミ', 'ム', 'メ', 'モ', 'ヤ', 'ユ', 'ヨ', 'ラ', 'リ', 'ル', 'レ', 'ロ', 'ワ', 'ヲ'];
-	const challanges_all = challanges_hira.concat(challanges_kata);
-	var start = 0;
-	var counter = 1;
-	var mode = 0;
-	var prev = 'あ';
-	var next = 'あ';
-	wanakana.bind(input);
-	input.addEventListener('input', check);
+		<input id="input" type="text">
 
-	function nextChallange() {
-		counter++;
-		if(counter % 15 == 0) {
-			start++
+		<div class="buttons">
+			<button id="hiragana">Hiragana <button id="katakana">Katakana <button id="review">Review</button></button></button>
+		</div>
+	</main>
+
+
+	<footer>
+		<p>for katakana use UPPERCASE letters.<br>
+		для катаканы используйте ЗАГЛАВНЫЕ буквы.</p>
+	</footer>
+	
+	
+	<script>
+		const input = document.querySelector('input');
+		const challange = document.getElementById('challange');
+		const challanges_hira = ['あ', 'い', 'う', 'え', 'お', 'か', 'き', 'く', 'け', 'こ', 'さ', 'し', 'す', 'せ', 'そ', 'た', 'ち', 'つ', 'て', 'と', 'な', 'に', 'ぬ', 'ね', 'の', 'は', 'ひ', 'ふ', 'へ', 'ほ', 'ま', 'み', 'む', 'め', 'も', 'や', 'ゆ', 'よ', 'ら', 'り', 'る', 'れ', 'ろ', 'ん'];
+		const challanges_kata = ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', 'サ', 'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト', 'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ', 'フ', 'ヘ', 'ホ', 'マ', 'ミ', 'ム', 'メ', 'モ', 'ヤ', 'ユ', 'ヨ', 'ラ', 'リ', 'ル', 'レ', 'ロ', 'ワ', 'ヲ'];
+		const challanges_all = challanges_hira.concat(challanges_kata);
+		var start = 0;
+		var counter = 1;
+		var mode = 0;
+		var prev = 'あ';
+		var next = 'あ';
+		wanakana.bind(input);
+		input.addEventListener('input', check);
+
+		function nextChallange() {
+			counter++;
+			if (counter % 15 == 0) {
+				start++
+			}
+			while (next == prev) {
+				if (mode == 0) {
+					rand = Math.floor(Math.random() * 5) + start
+					if (rand > challanges_hira.length) rand = challanges_hira.length;
+					next = challanges_hira[rand];
+				} else if (mode == 1) {
+					rand = Math.floor(Math.random() * 5) + start
+					if (rand > challanges_kata.length) rand = challanges_kata.length;
+					next = challanges_kata[rand];
+				} else if (mode == 2) {
+					rand = Math.floor(Math.random() * challanges_all.length);
+					next = challanges_all[rand];
+				}
+			}
+			input.value = '';
+			challange.textContent = next;
+			prev = next;
 		}
-		while(next == prev) {
-			if(mode == 0) {
-				rand = Math.floor(Math.random() * 5) + start
-				if(rand > challanges_hira.length) rand = challanges_hira.length;
-				next = challanges_hira[rand];
-			} else if (mode == 1) {
-				rand = Math.floor(Math.random() * 5) + start
-				if(rand > challanges_kata.length) rand = challanges_kata.length;
-				next = challanges_kata[rand];
-			} else if (mode == 2) {
-				rand = Math.floor(Math.random() * challanges_all.length);
-				next = challanges_all[rand];
+
+		function check(e) {
+			console.log(input.value + ' start=' + start + ' counter=' + counter);
+			if (challange.textContent == e.srcElement.value) {
+				nextChallange()
 			}
 		}
-		input.value = '';
-		challange.textContent = next;
-		prev = next;
-	}
-
-	function check(e) {
-		console.log(input.value + ' start=' + start + ' counter=' + counter);
-		if(challange.textContent == e.srcElement.value) {
-			nextChallange()
-		}
-	}
-	document.getElementById("hiragana").addEventListener('click', function() {
-		console.log("hiragana");
-		mode = 0;
-		counter--;
-		nextChallange();
-	});
-	document.getElementById("katakana").addEventListener('click', function() {
-		console.log("katakana");
-		mode = 1;
-		counter--;
-		nextChallange();
-	});
-	
-	document.getElementById("review").addEventListener('click', function() {
-		console.log("review");
-		mode = 2;
-		counter--;
-		nextChallange();
-	});
-	
+		document.getElementById("hiragana").addEventListener('click', function() {
+			console.log("hiragana");
+			mode = 0;
+			counter--;
+			nextChallange();
+		});
+		document.getElementById("katakana").addEventListener('click', function() {
+			console.log("katakana");
+			mode = 1;
+			counter--;
+			nextChallange();
+		});
+		document.getElementById("review").addEventListener('click', function() {
+			console.log("review");
+			mode = 2;
+			counter--;
+			nextChallange();
+		});
 	</script>
 </body>
+</html>
