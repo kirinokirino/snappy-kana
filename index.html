@@ -120,10 +120,13 @@
 			if (counter % 15 == 0) {
 				start++
 			}
+			if (start >= challanges_hira.length - 2) {
+				start = 0;
+			}
 			while (next == prev) {
 				if (mode == 0) {
 					rand = Math.floor(Math.random() * 5) + start
-					if (rand > challanges_hira.length) rand = challanges_hira.length - 1;
+					if (rand >= challanges_hira.length) rand = challanges_hira.length - 1;
 					next = challanges_hira[rand];
 				} else if (mode == 1) {
 					rand = Math.floor(Math.random() * 5) + start
