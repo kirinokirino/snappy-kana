@@ -123,11 +123,11 @@
 			while (next == prev) {
 				if (mode == 0) {
 					rand = Math.floor(Math.random() * 5) + start
-					if (rand > challanges_hira.length) rand = challanges_hira.length;
+					if (rand > challanges_hira.length) rand = challanges_hira.length - 1;
 					next = challanges_hira[rand];
 				} else if (mode == 1) {
 					rand = Math.floor(Math.random() * 5) + start
-					if (rand > challanges_kata.length) rand = challanges_kata.length;
+					if (rand > challanges_kata.length) rand = challanges_kata.length - 1;
 					next = challanges_kata[rand];
 				} else if (mode == 2) {
 					rand = Math.floor(Math.random() * challanges_all.length);
